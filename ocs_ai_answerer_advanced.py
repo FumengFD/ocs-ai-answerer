@@ -1466,53 +1466,7 @@ class PromptBuilder:
 现在请回答上述题目："""
 
     @staticmethod
-    def _build_matching_prompt(question: str, options: List[str]) -> str:
-        """构建连线题prompt"""
-        left_items = []
-        right_items = []
-        for opt in options:
-            parts = opt.split('->', 1) if '->' in opt else opt.split('→', 1) if '→' in opt else [opt, '']
-            if len(parts) == 2:
-                left_items.append(parts[0].strip())
-                right_items.append(parts[1].strip())
-        
-        if left_items and right_items:
-            left_text = "\n".join([f"  {i+1}. {item}" for i, item in enumerate(left_items)])
-            right_text = "\n".join([f"  {chr(65+i)}. {item}" for i, item in enumerate(right_items)])
-            return f"""你是一个专业的在线考试答题助手，请严格按照要求回答。
-
-【题目类型】连线题（将左边每一项匹配到右边正确的一项）
-
-【题目】
-{question}
-
-【左边项】
-{left_text}
-
-【右边项】
-{right_text}
-
-【回答要求】
-1. 将左边每一项与右边最匹配的一项连线
-2. 只返回右边项的字母编号（A、B、C...），按左边项顺序
-3. 多项答案之间用井号#分隔
-4. 只输出字母，不要有任何解释、分析或额外文字
-
-【示例】
-如果左边第1项匹配右边C，第2项匹配A，第3项匹配B，则输出：C#A#B
-
-现在请回答上述题目："""
-        else:
-            return f"""你是一个专业的在线考试答题助手。
-
-【题目类型】连线题
-
-【题目】
-{question}
-
-请将左边项与右边项连线，只返回右边项的字母编号，用#分隔。"""
-
-
+    
     @staticmethod
     def _build_judgement_prompt(question: str, options: List[str]) -> str:
         """构建判断题prompt"""
@@ -1667,7 +1621,12 @@ class AnswerProcessor:
         elif q_type == "completion":
             # 填空题只做轻度清洗，保留原始答案
             cleaned = AnswerProcessor._clean_answer(raw_answer)
-            return cleaned if cleaned else raw_answer
+            return cleaned if cleaned else (raw_answer or "未知")
+        elif q_type == "line":
+            letters = re.findall(r'[A-Za-z]', raw_answer)
+            if letters:
+                return "#".join([l.upper() for l in letters])
+            return raw_answer.strip() or "A"
         else:
             # 其他题型只做轻度清洗
             cleaned = AnswerProcessor._clean_answer(raw_answer)
