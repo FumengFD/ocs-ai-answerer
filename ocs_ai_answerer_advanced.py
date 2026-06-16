@@ -726,7 +726,7 @@ class SecurityManager:
         if not provided_key:
             return False
         
-        provided_hash = hashlib.sha256(provided_key.encode()).hexdigest()
+        provided_hash = hashlib.sha256(provided_key.strip().encode()).hexdigest()
         return provided_hash == self.secret_key_hash
     
     def update_key(self, old_key: str, new_key: str) -> Tuple[bool, str]:
@@ -3248,7 +3248,7 @@ def verify_auth():
     """验证API密钥是否有效"""
     try:
         data = request.get_json()
-        api_key = data.get('api_key', '')
+        api_key = data.get('api_key', '').strip()
         
         if not api_key:
             return jsonify({"valid": False, "error": "缺少API密钥"}), 400
