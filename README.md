@@ -81,7 +81,7 @@ DOUBAO_MODEL=doubao-seed-2-0-mini-260428
     "method": "post",
     "type": "fetch",
     "contentType": "json",
-    "homepage": "https://github.com/lkd6666/ocs-ai-answerer",
+    "homepage": "https://github.com/FumengFD/ocs-ai-answerer",
     "headers": {
       "Content-Type": "application/json"
     },
