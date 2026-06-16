@@ -66,7 +66,7 @@ DEEPSEEK_BASE_URL=https://api.deepseek.com
 
 DOUBAO_API_KEY=your-doubao-key
 DOUBAO_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
-DOUBAO_MODEL=doubao-seed-1-6-thinking-250715
+DOUBAO_MODEL=doubao-seed-2-0-mini-260428
 ```
 
 ### 4. 配置 OCS 脚本
