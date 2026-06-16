@@ -450,6 +450,43 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* 认证对话框 */
+        .auth-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .auth-overlay.show { display: flex; }
+        .auth-dialog {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .auth-dialog h3 { margin-bottom: 10px; color: #333; }
+        .auth-dialog p { color: #666; font-size: 14px; margin-bottom: 15px; }
+        .auth-dialog input {
+            width: 100%; padding: 10px 12px;
+            border: 1px solid #dcdfe6; border-radius: 6px;
+            font-size: 14px; margin-bottom: 15px;
+        }
+        .auth-dialog input:focus { outline: none; border-color: #409eff; }
+        .auth-dialog .auth-btns { display: flex; gap: 10px; justify-content: flex-end; }
+        .auth-dialog .btn { padding: 8px 20px; border-radius: 6px; border: none; cursor: pointer; font-size: 14px; }
+        .auth-dialog .btn-primary { background: #409eff; color: white; }
+        .auth-dialog .btn-primary:hover { background: #337ecc; }
+        .auth-dialog .btn-default { background: #f0f2f5; color: #606266; }
+        .auth-dialog .error-msg { color: #f56c6c; font-size: 13px; display: none; margin-bottom: 10px; }
+        .auth-status { font-size: 13px; padding: 4px 10px; border-radius: 12px; }
+        .auth-status.locked { background: #fef0f0; color: #f56c6c; }
+        .auth-status.unlocked { background: #f0f9eb; color: #67c23a; }
     </style>
 </head>
 <body>
@@ -460,6 +497,7 @@
         </div>
 
         <div class="nav-tabs">
+            <span class="auth-status locked" id="auth-status" style="margin-left:auto;margin-right:15px;align-self:center;cursor:pointer" onclick="logoutAuth()" title="点击退出认证">未认证</span>
             <button class="nav-tab active" onclick="switchTab('home')">🏠 首页</button>
             <button class="nav-tab" onclick="switchTab('model')">🧠 模型配置</button>
             <button class="nav-tab" onclick="switchTab('reasoning')">💡 思考模式</button>
@@ -807,6 +845,12 @@
             checkServiceStatus();
             // 每30秒检查一次服务状态
             setInterval(checkServiceStatus, 30000);
+            // 更新认证状态显示
+            const statusEl = document.getElementById('auth-status');
+            if (statusEl && getApiKey()) {
+                statusEl.textContent = '已认证';
+                statusEl.className = 'auth-status unlocked';
+            }
         };
 
         // 切换标签页
@@ -849,7 +893,7 @@
         // 加载配置
         async function loadConfig() {
             try {
-                const response = await fetch(`${API_BASE}/api/config`);
+                const response = await fetch(`${API_BASE}/api/config`, { headers: apiHeaders() });
                 if (!response.ok) throw new Error('加载配置失败');
                 
                 const config = await response.json();
@@ -924,7 +968,7 @@
             try {
                 const response = await fetch(`${API_BASE}/api/config`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: apiHeaders(),
                     body: JSON.stringify(config)
                 });
 
@@ -1101,5 +1145,18 @@
             }
         }
     </script>
+
+    <!-- 认证对话框 -->
+    <div class="auth-overlay show" id="auth-overlay">
+        <div class="auth-dialog">
+            <h3>访问验证</h3>
+            <p>请输入服务器启动时显示的访问密钥</p>
+            <div class="error-msg" id="auth-error"></div>
+            <input type="text" id="auth-key-input" placeholder="64位访问密钥" autocomplete="off">
+            <div class="auth-btns">
+                <button class="btn btn-primary" onclick="doAuth()">验证</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
