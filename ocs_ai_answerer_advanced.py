@@ -1231,6 +1231,21 @@ class ModelClient:
                     print(f"\n❌ API参数错误: {error_msg[:200]}")
                     if "max_tokens" in error_msg.lower():
                         print("💡 提示: max_tokens必须在[1, 8192]范围内，已自动限制")
+                    # 豆包失败，降级到 DeepSeek 纯文本模式
+                    if selected_provider == 'doubao' and self.is_auto_mode and 'deepseek' in self.clients:
+                        logger.warning("⚠️  豆包不可用，降级到 DeepSeek 纯文本模式")
+                        print("\n⚠️  豆包不可用，降级到 DeepSeek（无图片识别）")
+                        selected_provider = 'deepseek'
+                        selected_client = self.clients['deepseek']
+                        selected_model = self.models['deepseek']
+                        actual_model = selected_model
+                        max_tokens_limit = MAX_TOKENS
+                        request_params["model"] = actual_model
+                        request_params["max_tokens"] = max_tokens_limit
+                        request_params["messages"] = build_messages(False)
+                        if "reasoning_effort" in request_params:
+                            del request_params["reasoning_effort"]
+                        continue
                     return None, None, None
                 
                 # 检查是否是图片相关的错误（即使使用了base64，也可能因为图片过大或格式问题失败）
