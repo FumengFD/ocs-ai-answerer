@@ -287,7 +287,7 @@
           <el-switch v-model="modelForm.supports_reasoning" />
           <div class="form-tip">
             <el-icon><InfoFilled /></el-icon>
-            是否支持深度推理/思考模式（如DeepSeek Reasoner）
+            是否支持深度推理/思考模式（如DeepSeek Pro）
           </div>
         </el-form-item>
 

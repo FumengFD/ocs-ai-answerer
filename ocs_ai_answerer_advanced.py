@@ -499,10 +499,10 @@ def import_system_models():
     
     # 导入DeepSeek模型（同时导入 chat 和 reasoner 两个版本）
     if DEEPSEEK_API_KEY:
-        # 1. 导入 DeepSeek Chat（标准模型）
+        # 1. 导入 DeepSeek Flash（标准模型）
         if 'system_deepseek_chat' not in custom_model_manager.models:
             deepseek_chat_config = {
-                'name': 'DeepSeek Chat (系统配置)',
+                'name': 'DeepSeek Flash (系统配置)',
                 'provider': 'openai',
                 'api_key': DEEPSEEK_API_KEY,
                 'base_url': DEEPSEEK_BASE_URL,
@@ -519,13 +519,13 @@ def import_system_models():
             }
             success, msg = custom_model_manager.add_model('system_deepseek_chat', deepseek_chat_config)
             if success:
-                logger.info("✅ 已导入系统模型: DeepSeek Chat")
+                logger.info("✅ 已导入系统模型: DeepSeek Flash")
                 imported = True
         
-        # 2. 导入 DeepSeek Reasoner（思考模型）
+        # 2. 导入 DeepSeek Pro（思考模型）
         if 'system_deepseek_reasoner' not in custom_model_manager.models:
             deepseek_reasoner_config = {
-                'name': 'DeepSeek Reasoner (系统配置)',
+                'name': 'DeepSeek Pro (系统配置)',
                 'provider': 'openai',
                 'api_key': DEEPSEEK_API_KEY,
                 'base_url': DEEPSEEK_BASE_URL,
@@ -542,7 +542,7 @@ def import_system_models():
             }
             success, msg = custom_model_manager.add_model('system_deepseek_reasoner', deepseek_reasoner_config)
             if success:
-                logger.info("✅ 已导入系统模型: DeepSeek Reasoner")
+                logger.info("✅ 已导入系统模型: DeepSeek Pro")
                 imported = True
     
     # 导入豆包模型
@@ -582,19 +582,19 @@ def import_system_models():
     # 如果有导入，自动配置题型映射（如果还没有配置）
     if imported:
         if not custom_model_manager.get_question_type_models('single'):
-            # 单选题优先DeepSeek Chat（快速）
+            # 单选题优先DeepSeek Flash（快速）
             custom_model_manager.set_question_type_models('single', ['system_deepseek_chat'])
         
         if not custom_model_manager.get_question_type_models('multiple'):
-            # 多选题使用DeepSeek Reasoner（需要思考）
+            # 多选题使用DeepSeek Pro（需要思考）
             custom_model_manager.set_question_type_models('multiple', ['system_deepseek_reasoner', 'system_deepseek_chat'])
         
         if not custom_model_manager.get_question_type_models('judgement'):
-            # 判断题优先DeepSeek Chat
+            # 判断题优先DeepSeek Flash
             custom_model_manager.set_question_type_models('judgement', ['system_deepseek_chat'])
         
         if not custom_model_manager.get_question_type_models('completion'):
-            # 填空题优先DeepSeek Chat
+            # 填空题优先DeepSeek Flash
             custom_model_manager.set_question_type_models('completion', ['system_deepseek_chat'])
         
         if not custom_model_manager.get_question_type_models('image'):
