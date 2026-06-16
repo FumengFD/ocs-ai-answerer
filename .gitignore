@@ -52,3 +52,4 @@ node_modules/
 frontend/node_modules/
 custom_models.json
 frontend/package-lock.json
+_fix2.py
