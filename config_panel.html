@@ -639,8 +639,8 @@
                     <div class="form-group">
                         <label class="form-label">模型名称</label>
                         <select id="DEEPSEEK_MODEL" class="form-select">
-                            <option value="deepseek-flash">deepseek-flash（通用对话）</option>
-                            <option value="deepseek-pro">deepseek-pro（深度推理）</option>
+                            <option value="deepseek-v4-flash">deepseek-v4-flash（通用对话）</option>
+                            <option value="deepseek-v4-pro">deepseek-v4-pro（深度推理）</option>
                         </select>
                     </div>
                 </div>
@@ -676,7 +676,7 @@
                             </label>
                             <label class="form-label">启用推理模式（全局）</label>
                         </div>
-                        <span class="form-help">启用后所有题目都使用深度推理模式（DeepSeek自动切换到deepseek-pro）</span>
+                        <span class="form-help">启用后所有题目都使用深度推理模式（DeepSeek自动切换到deepseek-v4-pro）</span>
                     </div>
                     <div class="form-group">
                         <label class="form-label">思考强度（仅豆包）</label>
@@ -1064,7 +1064,7 @@
                 PREFER_MODEL: 'deepseek',
                 IMAGE_MODEL: 'doubao',
                 DEEPSEEK_BASE_URL: 'https://api.deepseek.com',
-                DEEPSEEK_MODEL: 'deepseek-flash',
+                DEEPSEEK_MODEL: 'deepseek-v4-flash',
                 DOUBAO_BASE_URL: 'https://ark.cn-beijing.volces.com/api/v3',
                 DOUBAO_MODEL: 'doubao-seed-1-6-thinking-250715',
                 ENABLE_REASONING: false,

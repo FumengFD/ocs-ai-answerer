@@ -344,7 +344,7 @@
                   <li><strong>自定义模型：</strong> 请参考模型的API文档</li>
                 </ul>
                 <div style="margin-top: 10px;">
-                  <strong>⚠️ 注意：</strong>如果模型本身就是思考模型（如deepseek-pro），通常不需要额外参数，但仍会返回思考过程。
+                  <strong>⚠️ 注意：</strong>如果模型本身就是思考模型（如deepseek-v4-pro），通常不需要额外参数，但仍会返回思考过程。
                 </div>
               </div>
             </el-alert>

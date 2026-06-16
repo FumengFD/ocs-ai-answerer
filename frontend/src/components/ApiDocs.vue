@@ -224,8 +224,8 @@ let answerResponse = `[
   "ref",
   {
     "ai": true,
-    "tags": ["deepseek-flash", "自动选择"],
-    "model": "deepseek-flash",
+    "tags": ["deepseek-v4-flash", "自动选择"],
+    "model": "deepseek-v4-flash",
     "reasoning_used": false,
     "ai_time": 1.23
   }
@@ -236,7 +236,7 @@ let healthResponse = `{
   "service": "OCS AI Answerer (Multi-Model)",
   "version": "2.2.0",
   "provider": "auto",
-  "model": "deepseek-flash",
+  "model": "deepseek-v4-flash",
   "reasoning_enabled": false,
   "api_configured": true,
   "init_error": null
@@ -249,7 +249,7 @@ let configGetResponse = `{
   "IMAGE_MODEL": "doubao",
   "DEEPSEEK_API_KEY": "sk-12345...",
   "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
-  "DEEPSEEK_MODEL": "deepseek-flash",
+  "DEEPSEEK_MODEL": "deepseek-v4-flash",
   "ENABLE_REASONING": "false",
   "TEMPERATURE": "0.1",
   "MAX_TOKENS": "500",

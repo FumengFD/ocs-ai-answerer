@@ -24,7 +24,7 @@
 
 | 类别 | 改动 |
 |------|------|
-| 模型 | `deepseek-chat` -> `deepseek-flash`，`deepseek-reasoner` -> `deepseek-pro`，豆包 -> `doubao-seed-1-6-thinking-250715` |
+| 模型 | `deepseek-chat` -> `deepseek-v4-flash`，`deepseek-reasoner` -> `deepseek-v4-pro`，豆包 -> `doubao-seed-1-6-thinking-250715` |
 | 服务器 | Flask 开发服务器 -> **Waitress** 生产级 WSGI（4 线程） |
 | 开箱即用 | 首次启动**自动从 `env.template` 创建 `.env`** |
 | 前端 | 自动构建 Vue3 SPA；**无 Node.js 时回退静态 HTML** 界面 |
@@ -242,7 +242,7 @@ WantedBy=multi-user.target
 
 ### v3.1 (2025-06)
 
-- 模型更新：`deepseek-flash` / `deepseek-pro` / `doubao-seed-1-6-thinking-250715`
+- 模型更新：`deepseek-v4-flash` / `deepseek-v4-pro` / `doubao-seed-1-6-thinking-250715`
 - Waitress 生产级 WSGI 替代 Flask 开发服务器
 - 首次启动自动从 `env.template` 创建 `.env`
 - 自动构建前端，无 Node.js 回退静态 HTML
