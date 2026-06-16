@@ -260,11 +260,6 @@ WantedBy=multi-user.target
 - 降低温度：`TEMPERATURE=0.05`
 - `MODEL_PROVIDER=auto` 智能选择最优模型
 
-### API 密钥安全
-- 使用 `.env` 文件存储密钥（已加入 `.gitignore`）
-- 不要将真实密钥提交到 Git
-- 使用访问密钥保护配置页面
-
 </details>
 
 ---
