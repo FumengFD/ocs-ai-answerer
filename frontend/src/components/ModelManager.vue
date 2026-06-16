@@ -658,7 +658,8 @@ const questionTypeMappings = ref({
   multiple: { models: [], enable_reasoning: true },
   judgement: { models: [], enable_reasoning: false },
   completion: { models: [], enable_reasoning: false },
-  image: { models: [], enable_reasoning: false }
+  image: { models: [], enable_reasoning: false },
+  line: { models: [], enable_reasoning: false }
 })
 
 // 计算属性
@@ -951,7 +952,8 @@ const getTypeName = (type) => {
     multiple: '多选题',
     judgement: '判断题',
     completion: '填空题',
-    image: '图片题'
+    image: '图片题',
+    line: '连线题'
   }
   return names[type] || type
 }
@@ -962,7 +964,8 @@ const getTypeTip = (type) => {
     multiple: '建议使用支持思考模式的模型',
     judgement: '简单题型，使用基础模型即可',
     completion: '根据填空复杂度选择合适的模型',
-    image: '必须使用支持多模态的模型'
+    image: '必须使用支持多模态的模型',
+    line: '按顺序匹配左右项，使用基础模型即可'
   }
   return tips[type] || ''
 }
