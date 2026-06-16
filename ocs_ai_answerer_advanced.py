@@ -179,6 +179,7 @@ QUESTION_TYPE_SINGLE = 'single'
 QUESTION_TYPE_MULTIPLE = 'multiple'
 QUESTION_TYPE_COMPLETION = 'completion'
 QUESTION_TYPE_JUDGEMENT = 'judgement'
+QUESTION_TYPE_LINE = 'line'  # 连线题
 
 # 模型提供商常量
 PROVIDER_DEEPSEEK = 'deepseek'
@@ -257,6 +258,7 @@ class CustomModelManager:
             'multiple': {'models': [], 'enable_reasoning': True},
             'judgement': {'models': [], 'enable_reasoning': False},
             'completion': {'models': [], 'enable_reasoning': False},
+            'line': {'models': [], 'enable_reasoning': False},
             'image': {'models': [], 'enable_reasoning': False}
         }
         self._load_config()
@@ -596,6 +598,9 @@ def import_system_models():
         if not custom_model_manager.get_question_type_models('completion'):
             # 填空题优先DeepSeek Flash
             custom_model_manager.set_question_type_models('completion', ['system_deepseek_chat'])
+        
+        if not custom_model_manager.get_question_type_models('line'):
+            custom_model_manager.set_question_type_models('line', ['system_deepseek_chat'])
         
         if not custom_model_manager.get_question_type_models('image'):
             # 图片题使用豆包
@@ -1385,6 +1390,54 @@ class PromptBuilder:
 现在请回答上述题目："""
 
     @staticmethod
+    def _build_matching_prompt(question: str, options: List[str]) -> str:
+        """构建连线题prompt"""
+        left_items = []
+        right_items = []
+        for opt in options:
+            parts = opt.split('->', 1) if '->' in opt else opt.split('→', 1) if '→' in opt else [opt, '']
+            if len(parts) == 2:
+                left_items.append(parts[0].strip())
+                right_items.append(parts[1].strip())
+        
+        if left_items and right_items:
+            left_text = "\n".join([f"  {i+1}. {item}" for i, item in enumerate(left_items)])
+            right_text = "\n".join([f"  {chr(65+i)}. {item}" for i, item in enumerate(right_items)])
+            return f"""你是一个专业的在线考试答题助手，请严格按照要求回答。
+
+【题目类型】连线题（将左边每一项匹配到右边正确的一项）
+
+【题目】
+{question}
+
+【左边项】
+{left_text}
+
+【右边项】
+{right_text}
+
+【回答要求】
+1. 将左边每一项与右边最匹配的一项连线
+2. 只返回右边项的字母编号（A、B、C...），按左边项顺序
+3. 多项答案之间用井号#分隔
+4. 只输出字母，不要有任何解释、分析或额外文字
+
+【示例】
+如果左边第1项匹配右边C，第2项匹配A，第3项匹配B，则输出：C#A#B
+
+现在请回答上述题目："""
+        else:
+            return f"""你是一个专业的在线考试答题助手。
+
+【题目类型】连线题
+
+【题目】
+{question}
+
+请将左边项与右边项连线，只返回右边项的字母编号，用#分隔。"""
+
+
+    @staticmethod
     def _build_multiple_choice_prompt(question: str, options: List[str]) -> str:
         """构建多选题prompt"""
         options_text = "\n".join([f"{chr(65+i)}. {opt}" for i, opt in enumerate(options)])
@@ -1411,6 +1464,54 @@ class PromptBuilder:
 如果正确答案是"北京"和"上海"两个选项，则输出：北京#上海
 
 现在请回答上述题目："""
+
+    @staticmethod
+    def _build_matching_prompt(question: str, options: List[str]) -> str:
+        """构建连线题prompt"""
+        left_items = []
+        right_items = []
+        for opt in options:
+            parts = opt.split('->', 1) if '->' in opt else opt.split('→', 1) if '→' in opt else [opt, '']
+            if len(parts) == 2:
+                left_items.append(parts[0].strip())
+                right_items.append(parts[1].strip())
+        
+        if left_items and right_items:
+            left_text = "\n".join([f"  {i+1}. {item}" for i, item in enumerate(left_items)])
+            right_text = "\n".join([f"  {chr(65+i)}. {item}" for i, item in enumerate(right_items)])
+            return f"""你是一个专业的在线考试答题助手，请严格按照要求回答。
+
+【题目类型】连线题（将左边每一项匹配到右边正确的一项）
+
+【题目】
+{question}
+
+【左边项】
+{left_text}
+
+【右边项】
+{right_text}
+
+【回答要求】
+1. 将左边每一项与右边最匹配的一项连线
+2. 只返回右边项的字母编号（A、B、C...），按左边项顺序
+3. 多项答案之间用井号#分隔
+4. 只输出字母，不要有任何解释、分析或额外文字
+
+【示例】
+如果左边第1项匹配右边C，第2项匹配A，第3项匹配B，则输出：C#A#B
+
+现在请回答上述题目："""
+        else:
+            return f"""你是一个专业的在线考试答题助手。
+
+【题目类型】连线题
+
+【题目】
+{question}
+
+请将左边项与右边项连线，只返回右边项的字母编号，用#分隔。"""
+
 
     @staticmethod
     def _build_judgement_prompt(question: str, options: List[str]) -> str:
@@ -2114,7 +2215,7 @@ def answer_question():
             return jsonify({"success": False, "error": "题目不能为空"}), 400
         
         q_type = QUESTION_TYPES.get(type_num, "single")
-        q_type_name = {"single": "单选题", "multiple": "多选题", "judgement": "判断题", "completion": "填空题"}.get(q_type, "未知题型")
+        q_type_name = {"single": "单选题", "multiple": "多选题", "judgement": "判断题", "completion": "填空题", "line": "连线题"}.get(q_type, "未知题型")
         
         # 处理选项：支持多种格式
         if isinstance(options, str):
