@@ -1,6 +1,6 @@
 # OCS AI Answerer
 
-## OCS 智能答题 API — 多模型支持版本
+## OCS 智能答题 API — 多模型支持版本（社区优化版）
 
 <div align="center">
 
@@ -12,7 +12,10 @@
 ![DeepSeek](https://img.shields.io/badge/DeepSeek-Flash%2FPro-orange.svg)
 ![Doubao](https://img.shields.io/badge/Doubao-1.6%20Thinking-purple.svg)
 
-专为 [OCS 网课助手](https://docs.ocsjs.com/) 设计的智能答题 API，支持 DeepSeek、豆包等多个大语言模型。
+专为 [OCS 网课助手](https://docs.ocsjs.com/) 设计的智能答题 API，支持 DeepSeek、豆包等多个大语言模型，支持超星学习通等学习网站的刷课，答题活动。
+
+本项目不支持OCR识别，如不希望使用Doubao，或不希望安装python，懒人一键启动，可移步[OCS-AI-Server](https://github.com/FumengFD/OCS-AI-Server/)项目，OCS-AI-Server代码和UI更加简陋。
+
 
 </div>
 
@@ -31,7 +34,6 @@
 | 密钥 | 访问密钥**每次启动都显示**，不再丢失 |
 | 题型 | 新增**连线题**支持（type=5，字母#分隔） |
 | 优化 | 答案兜底、填空题智能检测、题目截断 |
-| 配置 | config_panel 新增 **OCS 脚本配置**标签页（一键复制） |
 
 ---
 
