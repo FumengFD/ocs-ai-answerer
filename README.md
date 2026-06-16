@@ -72,6 +72,35 @@ DOUBAO_MODEL=doubao-seed-2-0-mini-260428
 ### 4. 配置 OCS 脚本
 
 在 OCS 脚本的题库配置中导入 `ocs_config.json`，或手动设置答题 URL 为 `http://127.0.0.1:5000/api/answer`。
+`ocs_config.json`内容如下：
+```
+[
+  {
+    "name": "AI智能答题",
+    "url": "http://localhost:5000/api/answer",
+    "method": "post",
+    "type": "fetch",
+    "contentType": "json",
+    "homepage": "https://github.com/lkd6666/ocs-ai-answerer",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "question": "${title}",
+      "options": {
+        "handler": "return (env)=>env.options?.split('\\n')"
+      },
+      "type": {
+        "handler": "return (env)=> env.type === 'single' ? 0 : env.type === 'multiple' ? 1 : env.type === 'completion' ? 3 : env.type === 'completion' ? 3 : env.type === 'judgement' ? 4 : env.type === 'line' ? 5 : 0"
+      },
+      "images": {
+        "handler": "return (env)=> { const imgPattern = /https?:\\/\\/[^\\s]+\\.(?:jpg|jpeg|png|gif|bmp|webp)/gi; return env.title?.match(imgPattern) || []; }"
+      }
+    },
+    "handler": "return (res)=>res.success && res.ocs_format ? res.ocs_format : []"
+  }
+]
+```
 
 ---
 
