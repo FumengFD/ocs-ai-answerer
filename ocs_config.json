@@ -1,24 +1,15 @@
-{
-  "name": "AI智能答题",
-  "url": "http://localhost:5000/api/answer",
-  "method": "post",
-  "type": "fetch",
-  "contentType": "json",
-  "homepage": "https://github.com/lkd6666/ocs-ai-answerer",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "data": {
-    "question": "${title}",
-    "options": {
-      "handler": "return (env)=>env.options?.split('\\n')"
+[
+  {
+    "name": "AI智能答题",
+    "url": "http://127.0.0.1:5000/api/answer",
+    "method": "post",
+    "type": "GM_xmlhttpRequest",
+    "contentType": "json",
+    "data": {
+      "question": "${title}",
+      "options": "${options}",
+      "type": "${type}"
     },
-    "type": {
-      "handler": "return (env)=> env.type === 'single' ? 0 : env.type === 'multiple' ? 1 : env.type === 'completion' ? 3 : env.type === 'judgement' ? 4 : env.type === 'line' ? 5 : 0"
-    },
-    "images": {
-      "handler": "return (env)=> { const imgs = env.title?.match(/https?:\\/\\/[^\\s]+\\.(?:jpg|jpeg|png|gif|bmp|webp)/gi); return imgs || []; }"
-    }
-  },
-  "handler": "return (res)=>res.success && res.ocs_format ? res.ocs_format : []"
-}
+    "handler": "return (res)=>res.success && res.ocs_format ? [res.ocs_format] : []"
+  }
+]
