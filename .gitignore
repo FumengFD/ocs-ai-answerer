@@ -50,3 +50,4 @@ Thumbs.db
 # 前端依赖
 node_modules/
 frontend/node_modules/
+custom_models.json
