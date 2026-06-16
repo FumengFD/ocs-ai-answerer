@@ -3735,7 +3735,8 @@ if __name__ == '__main__':
             print(f"   📄 纯文本 → 自动使用 {model_client.prefer_model} (成本更低)")
             print(f"   🔧 已配置模型: {', '.join(model_client.clients.keys())}\n")
         else:
-            print("✅ 服务启动成功！\n")
+            print("✅ 服务启动成功！\n")
+
 
     # 使用生产级 Waitress WSGI 服务器
     print(f"🚀 启动 Waitress 生产服务器: http://{_display_host}:{PORT}")
