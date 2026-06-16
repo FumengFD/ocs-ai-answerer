@@ -89,7 +89,7 @@
             <el-input v-model="config.DEEPSEEK_BASE_URL" placeholder="https://api.deepseek.com" />
           </el-form-item>
           <el-form-item label="模型名称">
-            <el-input v-model="config.DEEPSEEK_MODEL" placeholder="deepseek-chat" />
+            <el-input v-model="config.DEEPSEEK_MODEL" placeholder="deepseek-flash" />
           </el-form-item>
 
           <el-divider content-position="left">豆包 (Doubao) 配置</el-divider>
@@ -306,7 +306,7 @@ const config = reactive({
   IMAGE_MODEL: 'doubao',
   DEEPSEEK_API_KEY: '',
   DEEPSEEK_BASE_URL: 'https://api.deepseek.com',
-  DEEPSEEK_MODEL: 'deepseek-chat',
+  DEEPSEEK_MODEL: 'deepseek-flash',
   DOUBAO_API_KEY: '',
   DOUBAO_BASE_URL: 'https://ark.cn-beijing.volces.com/api/v3',
   DOUBAO_MODEL: '',

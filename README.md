@@ -70,7 +70,7 @@
 - **保存并重启**：一键保存配置并自动重启服务器，自动轮询检测重启状态
 
 ### 🤖 AI驱动
-- **多模型支持**：DeepSeek Chat、DeepSeek Reasoner、豆包 (Doubao) 等多个大语言模型
+- **多模型支持**：DeepSeek Flash、DeepSeek Pro、豆包 (Doubao) 等多个大语言模型
 - **题型思考开关**：在 Web 管理台为不同题型分别配置是否启用深度思考
 - **原生思考模型**：自动识别 Reasoner 模型，强制启用深度推理并提示混合模式行为
 - **多选题智能**：多选题自动启用深度思考，提高准确率
@@ -211,7 +211,7 @@ DEEPSEEK_BASE_URL=https://api.deepseek.com
 # 豆包配置（图片题目，支持多模态）
 DOUBAO_API_KEY=your-doubao-api-key         # 👈 填入你的密钥
 DOUBAO_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
-DOUBAO_MODEL=doubao-seed-1-6-251015        # 👈 填入你的接入点ID
+DOUBAO_MODEL=doubao-seed-1-6-thinking-250715        # 👈 填入你的接入点ID
 
 # 思考模式（推荐配置）
 ENABLE_REASONING=false
@@ -537,12 +537,12 @@ MODEL_PROVIDER=auto  # auto=智能选择（推荐）
 # DeepSeek配置
 DEEPSEEK_API_KEY=sk-xxxxx           # DeepSeek API密钥 👈 必填
 DEEPSEEK_BASE_URL=https://api.deepseek.com  # API地址
-DEEPSEEK_MODEL=deepseek-chat        # 模型名称
+DEEPSEEK_MODEL=deepseek-flash        # 模型名称
 
 # 豆包配置
 DOUBAO_API_KEY=xxxxx                # 豆包API密钥 👈 可选
 DOUBAO_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
-DOUBAO_MODEL=doubao-seed-1-6-251015 # 推理接入点ID 👈 可选
+DOUBAO_MODEL=doubao-seed-1-6-thinking-250715 # 推理接入点ID 👈 可选
 ```
 
 #### 思考模式配置
@@ -569,7 +569,7 @@ REASONING_EFFORT=medium
 
 > 💡 **为什么需要单独配置思考模式的 token？**
 > 
-> 思考模式（如 deepseek-reasoner）需要输出详细的推理过程，比普通模式需要更多的 token。如果设置太小，可能导致推理过程被截断，影响答案质量。推荐配置：
+> 思考模式（如 deepseek-pro）需要输出详细的推理过程，比普通模式需要更多的 token。如果设置太小，可能导致推理过程被截断，影响答案质量。推荐配置：
 > - `MAX_TOKENS=500`（普通模式，节省成本）
 > - `REASONING_MAX_TOKENS=4096`（思考模式，确保完整推理）
 
@@ -587,8 +587,8 @@ TOP_P=0.95                   # 核采样参数
 | 参数 | 范围 | 推荐值 | 作用说明 |
 |------|------|--------|----------|
 | **TEMPERATURE** | 0.0-2.0 | 0.1 | **控制答案的随机性和创造性**<br>• 0.0-0.3：确定性高，适合答题（推荐）<br>• 0.4-0.7：平衡，适合对话<br>• 0.8-2.0：创造性高，答案多样但可能不准确 |
-| **MAX_TOKENS** | 1-8192 | 500 | **普通模式的最大输出长度**<br>• 填空题：200-300 足够<br>• 选择题：300-500 合适<br>• 复杂题目：可增加到 1000+<br>• deepseek-chat 最大：8192 |
-| **REASONING_MAX_TOKENS** | 1-65536 | 4096 | **思考模式的最大输出长度**<br>• 简单思考：2000-4000<br>• 中等复杂：4096-8000（推荐）<br>• 复杂推理：8000-16000<br>• 图片题：建议4096+（推荐）<br>• deepseek-reasoner 最大：65536 |
+| **MAX_TOKENS** | 1-8192 | 500 | **普通模式的最大输出长度**<br>• 填空题：200-300 足够<br>• 选择题：300-500 合适<br>• 复杂题目：可增加到 1000+<br>• deepseek-flash 最大：8192 |
+| **REASONING_MAX_TOKENS** | 1-65536 | 4096 | **思考模式的最大输出长度**<br>• 简单思考：2000-4000<br>• 中等复杂：4096-8000（推荐）<br>• 复杂推理：8000-16000<br>• 图片题：建议4096+（推荐）<br>• deepseek-pro 最大：65536 |
 | **TOP_P** | 0.0-1.0 | 0.95 | **核采样，控制词汇选择范围**<br>• 0.9-1.0：词汇丰富，表达多样（推荐）<br>• 0.5-0.8：更保守，重复性增加<br>• 0.1-0.4：非常保守，可能过于机械 |
 
 **答题场景推荐配置：**
@@ -766,7 +766,7 @@ Content-Type: application/json
   "answer": "北京",
   "type": "single",
   "raw_answer": "北京",
-  "model": "deepseek-chat",
+  "model": "deepseek-flash",
   "provider": "deepseek",
   "reasoning_used": false,
   "ai_time": 1.23,
@@ -777,9 +777,9 @@ Content-Type: application/json
     {
       "ai": true,
       "tags": [
-        {"text": "DEEPSEEK", "title": "模型: deepseek-chat", "color": "green"}
+        {"text": "DEEPSEEK", "title": "模型: deepseek-flash", "color": "green"}
       ],
-      "model": "deepseek-chat",
+      "model": "deepseek-flash",
       "provider": "deepseek",
       "reasoning_used": false,
       "ai_time": 1.23,
@@ -816,7 +816,7 @@ Response:
   "service": "OCS AI Answerer (Multi-Model)",
   "version": "3.0.0",
   "provider": "deepseek",
-  "model": "deepseek-chat",
+  "model": "deepseek-flash",
   "reasoning_enabled": false,
   "api_configured": true,
   "security_enabled": true
@@ -994,8 +994,8 @@ MODEL_PROVIDER=deepseek  # 或 doubao
 ```
 
 #### DeepSeek
-- **普通模式**：`deepseek-chat`，最大8K tokens
-- **思考模式**：`deepseek-reasoner`，最大64K tokens
+- **普通模式**：`deepseek-flash`，最大8K tokens
+- **思考模式**：`deepseek-pro`，最大64K tokens
 - **特点**：响应快速，性价比高
 
 #### 豆包（Doubao）
@@ -1452,7 +1452,7 @@ MODEL_PROVIDER=auto  # 启用智能选择模式
 # 配置两个模型的API密钥
 DEEPSEEK_API_KEY=sk-xxxxx
 DOUBAO_API_KEY=xxxxx
-DOUBAO_MODEL=doubao-seed-1-6-251015
+DOUBAO_MODEL=doubao-seed-1-6-thinking-250715
 
 # 智能选择策略（可选配置）
 AUTO_MODEL_SELECTION=true        # 启用自动模型选择

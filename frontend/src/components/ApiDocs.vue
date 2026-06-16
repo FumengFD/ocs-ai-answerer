@@ -198,7 +198,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const activeNames = ref(['answer'])
+let activeNames = ref(['answer'])
 
 const answerParams = [
   { name: 'question_type', type: 'integer', required: true, description: '题目类型：0=单选，1=多选，3=填空，4=判断' },
@@ -207,7 +207,7 @@ const answerParams = [
   { name: 'images', type: 'array', required: false, description: '图片URL列表' }
 ]
 
-const answerExample = `{
+let answerExample = `{
   "question_type": 0,
   "question_text": "以下哪个是Vue3的响应式API？",
   "options": [
@@ -219,44 +219,44 @@ const answerExample = `{
   "images": []
 }`
 
-const answerResponse = `[
+let answerResponse = `[
   "以下哪个是Vue3的响应式API？",
   "ref",
   {
     "ai": true,
-    "tags": ["deepseek-chat", "自动选择"],
-    "model": "deepseek-chat",
+    "tags": ["deepseek-flash", "自动选择"],
+    "model": "deepseek-flash",
     "reasoning_used": false,
     "ai_time": 1.23
   }
 ]`
 
-const healthResponse = `{
+let healthResponse = `{
   "status": "ok",
   "service": "OCS AI Answerer (Multi-Model)",
   "version": "2.2.0",
   "provider": "auto",
-  "model": "deepseek-chat",
+  "model": "deepseek-flash",
   "reasoning_enabled": false,
   "api_configured": true,
   "init_error": null
 }`
 
-const configGetResponse = `{
+let configGetResponse = `{
   "MODEL_PROVIDER": "auto",
   "AUTO_MODEL_SELECTION": "true",
   "PREFER_MODEL": "deepseek",
   "IMAGE_MODEL": "doubao",
   "DEEPSEEK_API_KEY": "sk-12345...",
   "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
-  "DEEPSEEK_MODEL": "deepseek-chat",
+  "DEEPSEEK_MODEL": "deepseek-flash",
   "ENABLE_REASONING": "false",
   "TEMPERATURE": "0.1",
   "MAX_TOKENS": "500",
   ...
 }`
 
-const configPostRequest = `{
+let configPostRequest = `{
   "MODEL_PROVIDER": "auto",
   "DEEPSEEK_API_KEY": "sk-xxxxx",
   "ENABLE_REASONING": "true",
@@ -264,14 +264,14 @@ const configPostRequest = `{
   ...
 }`
 
-const configPostResponse = `{
+let configPostResponse = `{
   "success": true,
   "message": "配置已成功保存到 .env 文件",
   "file": "/path/to/.env",
   "note": "请重启服务以应用新配置"
 }`
 
-const csvClearResponse = `{
+let csvClearResponse = `{
   "message": "CSV日志已清空"
 }`
 </script>

@@ -582,8 +582,8 @@
                     <div class="form-group">
                         <label class="form-label">模型名称</label>
                         <select id="DEEPSEEK_MODEL" class="form-select">
-                            <option value="deepseek-chat">deepseek-chat（通用对话）</option>
-                            <option value="deepseek-reasoner">deepseek-reasoner（深度推理）</option>
+                            <option value="deepseek-flash">deepseek-flash（通用对话）</option>
+                            <option value="deepseek-pro">deepseek-pro（深度推理）</option>
                         </select>
                     </div>
                 </div>
@@ -601,7 +601,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">推理接入点ID</label>
-                        <input type="text" id="DOUBAO_MODEL" class="form-input" placeholder="doubao-seed-1-6-251015">
+                        <input type="text" id="DOUBAO_MODEL" class="form-input" placeholder="doubao-seed-1-6-thinking-250715">
                         <span class="form-help">在豆包控制台创建推理接入点后获得</span>
                     </div>
                 </div>
@@ -619,7 +619,7 @@
                             </label>
                             <label class="form-label">启用推理模式（全局）</label>
                         </div>
-                        <span class="form-help">启用后所有题目都使用深度推理模式（DeepSeek自动切换到deepseek-reasoner）</span>
+                        <span class="form-help">启用后所有题目都使用深度推理模式（DeepSeek自动切换到deepseek-pro）</span>
                     </div>
                     <div class="form-group">
                         <label class="form-label">思考强度（仅豆包）</label>
@@ -955,9 +955,9 @@
                 PREFER_MODEL: 'deepseek',
                 IMAGE_MODEL: 'doubao',
                 DEEPSEEK_BASE_URL: 'https://api.deepseek.com',
-                DEEPSEEK_MODEL: 'deepseek-chat',
+                DEEPSEEK_MODEL: 'deepseek-flash',
                 DOUBAO_BASE_URL: 'https://ark.cn-beijing.volces.com/api/v3',
-                DOUBAO_MODEL: 'doubao-seed-1-6-251015',
+                DOUBAO_MODEL: 'doubao-seed-1-6-thinking-250715',
                 ENABLE_REASONING: false,
                 REASONING_EFFORT: 'medium',
                 AUTO_REASONING_FOR_MULTIPLE: true,

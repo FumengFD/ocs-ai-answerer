@@ -6,7 +6,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -46,3 +45,8 @@ ocs_answers_log.csv
 .DS_Store
 Thumbs.db
 
+# 密钥文件
+.secret_key
+# 前端依赖
+node_modules/
+frontend/node_modules/
